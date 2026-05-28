@@ -30,17 +30,18 @@ const Hero = () => {
   // Preload and autoplay video with better loading strategy
   useEffect(() => {
     if (videoRef.current) {
-      // Ensure video is muted
-      videoRef.current.muted = true;
-      videoRef.current.volume = 0;
-
-      // Attempt to autoplay immediately
+      // Attempt to autoplay with sound
       const playPromise = videoRef.current.play();
       
       if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // If autoplay fails, it will play on user interaction or when visible
-          console.log('Autoplay prevented, will play on user interaction');
+        playPromise.catch((error) => {
+          // If autoplay with sound fails, it's likely browser policy
+          console.log('Autoplay with sound prevented by browser policy:', error.name);
+          // Try muted autoplay as fallback
+          videoRef.current!.muted = true;
+          videoRef.current!.play().catch(() => {
+            console.log('Muted autoplay also prevented');
+          });
         });
       }
 
@@ -50,9 +51,6 @@ const Hero = () => {
           entries.forEach((entry) => {
             if (videoRef.current) {
               if (entry.isIntersecting) {
-                // Double-check muted status
-                videoRef.current.muted = true;
-                videoRef.current.volume = 0;
                 videoRef.current.play().catch(() => {
                   // Silently handle if video can't play
                 });
@@ -89,11 +87,11 @@ const Hero = () => {
         <video
           ref={videoRef}
           loop
-          muted
           playsInline
           preload="metadata"
           autoPlay
           className="w-full h-full object-cover"
+          controls
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
