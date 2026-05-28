@@ -30,6 +30,10 @@ const Hero = () => {
   // Preload and autoplay video with better loading strategy
   useEffect(() => {
     if (videoRef.current) {
+      // Ensure video is muted
+      videoRef.current.muted = true;
+      videoRef.current.volume = 0;
+
       // Attempt to autoplay immediately
       const playPromise = videoRef.current.play();
       
@@ -46,6 +50,9 @@ const Hero = () => {
           entries.forEach((entry) => {
             if (videoRef.current) {
               if (entry.isIntersecting) {
+                // Double-check muted status
+                videoRef.current.muted = true;
+                videoRef.current.volume = 0;
                 videoRef.current.play().catch(() => {
                   // Silently handle if video can't play
                 });
