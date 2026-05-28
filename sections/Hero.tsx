@@ -27,32 +27,41 @@ const Hero = () => {
     }
   }, []);
 
-  // Play video only when hero section is visible
+  // Preload and autoplay video with better loading strategy
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (videoRef.current) {
-            if (entry.isIntersecting) {
-              videoRef.current.play();
-            } else {
-              videoRef.current.pause();
-            }
-          }
+    if (videoRef.current) {
+      // Attempt to autoplay immediately
+      const playPromise = videoRef.current.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // If autoplay fails, it will play on user interaction or when visible
+          console.log('Autoplay prevented, will play on user interaction');
         });
-      },
-      { threshold: 0.5 }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
       }
-    };
+
+      // Also setup Intersection Observer for better performance
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (videoRef.current) {
+              if (entry.isIntersecting) {
+                videoRef.current.play().catch(() => {
+                  // Silently handle if video can't play
+                });
+              }
+            }
+          });
+        },
+        { threshold: 0.1 } // Reduced threshold for earlier detection
+      );
+
+      observer.observe(videoRef.current);
+
+      return () => {
+        observer.disconnect();
+      };
+    }
   }, []);
 
   const splitText = (text: string) => {
@@ -69,10 +78,14 @@ const Hero = () => {
       className="relative h-screen w-full flex items-center justify-center overflow-hidden"
     >
       {/* Video Background */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden bg-black">
         <video
           ref={videoRef}
           loop
+          muted
+          playsInline
+          preload="metadata"
+          autoPlay
           className="w-full h-full object-cover"
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
