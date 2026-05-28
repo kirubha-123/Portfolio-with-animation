@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import gsap from 'gsap';
@@ -27,47 +27,40 @@ const Hero = () => {
     }
   }, []);
 
-  // Preload and autoplay video with better loading strategy
+  const [videoPlayed, setVideoPlayed] = useState(false);
+
+  // Preload and autoplay video with sound
   useEffect(() => {
-    if (videoRef.current) {
-      // Attempt to autoplay with sound
+    if (videoRef.current && !videoPlayed) {
+      // Attempt to autoplay with sound (no fallback to muted)
       const playPromise = videoRef.current.play();
       
       if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          // If autoplay with sound fails, it's likely browser policy
-          console.log('Autoplay with sound prevented by browser policy:', error.name);
-          // Try muted autoplay as fallback
-          videoRef.current!.muted = true;
-          videoRef.current!.play().catch(() => {
-            console.log('Muted autoplay also prevented');
+        playPromise
+          .then(() => {
+            setVideoPlayed(true);
+            console.log('Video playing with sound');
+          })
+          .catch((error) => {
+            console.log('Autoplay blocked by browser - user gesture needed:', error.name);
           });
+      }
+    }
+  }, [videoPlayed]);
+
+  // Handle click to play with sound
+  const handlePlayVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.volume = 1;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setVideoPlayed(true);
         });
       }
-
-      // Also setup Intersection Observer for better performance
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (videoRef.current) {
-              if (entry.isIntersecting) {
-                videoRef.current.play().catch(() => {
-                  // Silently handle if video can't play
-                });
-              }
-            }
-          });
-        },
-        { threshold: 0.1 } // Reduced threshold for earlier detection
-      );
-
-      observer.observe(videoRef.current);
-
-      return () => {
-        observer.disconnect();
-      };
     }
-  }, []);
+  };
 
   const splitText = (text: string) => {
     return text.split('').map((char, idx) => (
@@ -87,14 +80,39 @@ const Hero = () => {
         <video
           ref={videoRef}
           loop
-          playsInline
-          preload="metadata"
+          preload="auto"
           autoPlay
           className="w-full h-full object-cover"
           controls
         >
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
+
+        {/* Click to Play with Sound Overlay */}
+        {!videoPlayed && (
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center bg-black/40 cursor-pointer z-20"
+            onClick={handlePlayVideo}
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            whileHover={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+          >
+            <motion.div
+              className="flex flex-col items-center gap-4"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              <div className="w-20 h-20 bg-cyan-500 rounded-full flex items-center justify-center">
+                <svg className="w-10 h-10 text-white fill-current" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+              <p className="text-white text-lg font-semibold">Click to Play with Audio</p>
+            </motion.div>
+          </motion.div>
+        )}
+
         {/* Dark Overlay - Increased transparency */}
         <div className="absolute inset-0 bg-black/10" />
         {/* Gradient Lighting Effect */}
