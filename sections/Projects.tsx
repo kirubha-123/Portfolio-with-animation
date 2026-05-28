@@ -111,7 +111,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   return (
     <motion.div
       ref={cardRef}
-      className="group relative h-96 rounded-2xl overflow-hidden cursor-pointer"
+      className="group relative h-64 sm:h-80 md:h-96 rounded-xl md:rounded-2xl overflow-hidden cursor-pointer"
       whileHover={{ y: -10 }}
     >
       {/* Background Image */}
@@ -133,19 +133,19 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 
       {/* Animated Border Glow */}
       <motion.div
-        className="absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-border opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="absolute inset-0 rounded-xl md:rounded-2xl border-2 border-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-border opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         initial={{ opacity: 0 }}
         whileHover={{ opacity: 1 }}
       />
 
       {/* Content - Bottom positioned */}
-      <div className="absolute inset-0 p-6 flex flex-col justify-end">
+      <div className="absolute inset-0 p-3 sm:p-4 md:p-6 flex flex-col justify-end">
         {/* Tech Stack - Top right */}
-        <div className="absolute top-6 right-6 flex flex-wrap gap-2 justify-end">
+        <div className="absolute top-3 sm:top-4 md:top-6 right-3 sm:right-4 md:right-6 flex flex-wrap gap-1 sm:gap-2 justify-end max-h-20 overflow-y-auto">
           {project.tech.map((tech: string) => (
             <motion.span
               key={tech}
-              className="px-3 py-1 text-xs font-bold text-white bg-cyan-500 bg-opacity-80 rounded-full backdrop-blur-md border border-cyan-300 border-opacity-50"
+              className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs font-bold text-white bg-cyan-500 bg-opacity-80 rounded-full backdrop-blur-md border border-cyan-300 border-opacity-50 whitespace-nowrap"
               whileHover={{ scale: 1.1, backgroundColor: 'rgba(34, 211, 238, 1)' }}
             >
               {tech}
@@ -154,27 +154,27 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         </div>
 
         {/* Title */}
-        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1 sm:mb-2 group-hover:text-cyan-300 transition-colors duration-300 line-clamp-2">
           {project.title}
         </h3>
 
         {/* Description */}
-        <p className="text-gray-200 text-sm mb-4 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+        <p className="text-gray-200 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 group-hover:line-clamp-3 transition-all duration-300">
           {project.description}
         </p>
 
         {/* Buttons */}
-        <div className="flex gap-3 w-full">
+        <div className="flex gap-2 sm:gap-3 w-full">
           <motion.a
             href={project.liveDemo}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-bold hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/50"
+            className="flex-1 flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg md:rounded-xl font-bold text-xs sm:text-sm hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/50"
           >
-            <ExternalLink size={16} />
-            Live Demo
+            <ExternalLink size={14} className="hidden sm:block" />
+            <span>Live</span>
           </motion.a>
           <motion.a
             href={project.github}
@@ -182,16 +182,16 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center justify-center px-4 py-2 bg-white/10 text-white rounded-xl font-bold border-2 border-white/30 hover:bg-white/20 transition-all backdrop-blur-md"
+            className="flex items-center justify-center px-2 sm:px-4 py-1.5 sm:py-2 bg-white/10 text-white rounded-lg md:rounded-xl font-bold border-2 border-white/30 hover:bg-white/20 transition-all backdrop-blur-md"
           >
-            <Code size={18} />
+            <Code size={16} className="sm:size-5" />
           </motion.a>
         </div>
       </div>
 
       {/* Shine Effect on Hover */}
       <motion.div
-        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20"
+        className="absolute inset-0 rounded-xl md:rounded-2xl bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20"
         initial={{ x: '-100%' }}
         whileHover={{ x: '100%' }}
         transition={{ duration: 0.6 }}
@@ -202,26 +202,26 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-20 px-4 md:px-8 min-h-screen relative overflow-hidden">
+    <section id="projects" className="py-16 sm:py-20 md:py-24 px-3 sm:px-4 md:px-8 min-h-screen relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Section Title */}
         <motion.div
-          className="mb-16"
+          className="mb-12 sm:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             <span className="text-white">Featured </span>
             <span className="text-gradient">Projects</span>
           </h2>
-          <motion.div className="h-1 w-20 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" />
+          <motion.div className="h-1 w-16 sm:w-20 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" />
         </motion.div>
 
         {/* Projects Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
           variants={{
             hidden: { opacity: 0 },
             visible: {
@@ -249,9 +249,9 @@ const Projects = () => {
           ))}
         </motion.div>
 
-        {/* Floating Background Elements */}
+        {/* Floating Background Elements - Hidden on mobile */}
         <motion.div
-          className="absolute top-1/3 -left-32 w-96 h-96 bg-cyan-500 rounded-full blur-3xl opacity-5"
+          className="absolute top-1/3 -left-32 w-64 sm:w-96 h-64 sm:h-96 bg-cyan-500 rounded-full blur-3xl opacity-5 hidden sm:block"
           animate={{
             y: [0, -50, 0],
             x: [0, 50, 0],

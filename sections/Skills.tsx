@@ -54,11 +54,11 @@ const SkillCard = ({ name, level, index }: { name: string; level: number; index:
     <motion.div
       ref={cardRef}
       whileHover={{ y: -5, scale: 1.02 }}
-      className="group glass-morphism p-6 rounded-lg border border-cyan-500 border-opacity-30 hover:border-opacity-100 transition-all hover:shadow-lg hover:shadow-cyan-500/50"
+      className="group glass-morphism p-4 sm:p-6 rounded-lg md:rounded-xl border border-cyan-500 border-opacity-30 hover:border-opacity-100 transition-all hover:shadow-lg hover:shadow-cyan-500/50"
     >
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-bold text-white">{name}</h3>
-        <span className="text-sm font-semibold text-cyan-400">{level}%</span>
+      <div className="flex justify-between items-center mb-3 sm:mb-4">
+        <h3 className="text-base sm:text-lg font-bold text-white">{name}</h3>
+        <span className="text-xs sm:text-sm font-semibold text-cyan-400">{level}%</span>
       </div>
 
       {/* Skill Bar */}
@@ -84,26 +84,26 @@ const SkillCard = ({ name, level, index }: { name: string; level: number; index:
 
 const Skills = () => {
   return (
-    <section id="skills" className="py-20 px-4 md:px-8 min-h-screen relative overflow-hidden">
+    <section id="skills" className="py-16 sm:py-20 md:py-24 px-3 sm:px-4 md:px-8 min-h-screen relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Section Title */}
         <motion.div
-          className="mb-16"
+          className="mb-12 sm:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             <span className="text-white">Technical </span>
             <span className="text-gradient">Skills</span>
           </h2>
-          <motion.div className="h-1 w-20 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" />
+          <motion.div className="h-1 w-16 sm:w-20 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" />
         </motion.div>
 
         {/* Skills Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
           variants={{
             hidden: { opacity: 0 },
             visible: {
@@ -122,16 +122,16 @@ const Skills = () => {
           ))}
         </motion.div>
 
-        {/* Floating Background Elements */}
+        {/* Floating Background Elements - Hidden on mobile */}
         <motion.div
-          className="absolute top-1/2 -left-20 w-96 h-96 bg-cyan-500 rounded-full blur-3xl opacity-5"
+          className="absolute top-1/2 -left-20 w-64 sm:w-96 h-64 sm:h-96 bg-cyan-500 rounded-full blur-3xl opacity-5 hidden sm:block"
           animate={{
             y: [0, -50, 0],
           }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute bottom-0 -right-20 w-96 h-96 bg-blue-600 rounded-full blur-3xl opacity-5"
+          className="absolute bottom-0 -right-20 w-64 sm:w-96 h-64 sm:h-96 bg-blue-600 rounded-full blur-3xl opacity-5 hidden sm:block"
           animate={{
             y: [0, 50, 0],
           }}

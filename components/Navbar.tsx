@@ -45,31 +45,31 @@ const Navbar = () => {
     <motion.nav
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'glass-morphism py-4' : 'py-6'
+        isScrolled ? 'glass-morphism py-3 md:py-4' : 'py-4 md:py-6'
       )}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link href="#home" className="relative group">
-            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent hover:from-cyan-300 hover:to-blue-400 transition-all">
+          <Link href="#home" className="relative group flex-shrink-0">
+            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent hover:from-cyan-300 hover:to-blue-400 transition-all">
               KB
             </span>
             <div className="absolute -bottom-1 left-0 w-0 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 group-hover:w-full transition-all duration-300" />
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-1 lg:gap-8">
             {navItems.map((item) => (
               <motion.a
                 key={item.label}
                 href={item.href}
                 onClick={() => setActiveSection(item.href.split('#')[1])}
                 className={cn(
-                  'relative text-sm font-medium transition-colors',
+                  'relative text-xs lg:text-sm font-medium transition-colors px-2 lg:px-0',
                   activeSection === item.href.split('#')[1]
                     ? 'text-cyan-400'
                     : 'text-gray-300 hover:text-cyan-400'
@@ -92,12 +92,12 @@ const Navbar = () => {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden md:block">
+          <div className="hidden md:block flex-shrink-0">
             <motion.a
               href="#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full text-sm font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all inline-block cursor-pointer"
+              className="px-4 lg:px-6 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full text-xs lg:text-sm font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all inline-block cursor-pointer"
             >
               Get in Touch
             </motion.a>
@@ -106,9 +106,9 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-gray-300 hover:text-cyan-400 transition-colors"
+            className="md:hidden p-2 text-gray-300 hover:text-cyan-400 transition-colors flex-shrink-0"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
@@ -122,7 +122,7 @@ const Navbar = () => {
           transition={{ duration: 0.3 }}
           className="md:hidden overflow-hidden"
         >
-          <div className="pt-4 space-y-3">
+          <div className="pt-4 pb-2 space-y-2">
             {navItems.map((item) => (
               <motion.a
                 key={item.label}
@@ -132,7 +132,7 @@ const Navbar = () => {
                   setIsOpen(false);
                 }}
                 className={cn(
-                  'block px-4 py-2 rounded-lg transition-all',
+                  'block px-4 py-2 rounded-lg text-sm transition-all',
                   activeSection === item.href.split('#')[1]
                     ? 'bg-cyan-500 bg-opacity-20 text-cyan-400'
                     : 'text-gray-300 hover:bg-blue-500 hover:bg-opacity-10'
@@ -142,6 +142,16 @@ const Navbar = () => {
                 {item.label}
               </motion.a>
             ))}
+            {/* Mobile CTA Button */}
+            <motion.a
+              href="#contact"
+              onClick={() => setIsOpen(false)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="block px-4 py-2 mx-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg text-sm font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all text-center mt-4"
+            >
+              Get in Touch
+            </motion.a>
           </div>
         </motion.div>
       </div>

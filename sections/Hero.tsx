@@ -97,11 +97,11 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto" ref={containerRef}>
+      <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto" ref={containerRef}>
         {/* Main Heading */}
         <motion.h1
           ref={textRef}
-          className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 leading-tight"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -116,7 +116,7 @@ const Hero = () => {
 
         {/* Description */}
         <motion.p
-          className="text-gray-300 text-xl md:text-2xl max-w-3xl mx-auto mb-8 leading-relaxed"
+          className="text-sm sm:text-base md:text-lg lg:text-xl max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed text-gray-300"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -126,7 +126,7 @@ const Hero = () => {
 
         {/* CTA Buttons */}
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -135,7 +135,7 @@ const Hero = () => {
             href="#projects"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all premium-shadow cursor-pointer inline-block"
+            className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-full text-sm sm:text-base font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all premium-shadow cursor-pointer inline-block"
           >
             View Projects
           </motion.a>
@@ -143,7 +143,7 @@ const Hero = () => {
             href="#contact"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 border-2 border-cyan-400 text-cyan-400 rounded-full font-semibold hover:bg-cyan-400 hover:bg-opacity-10 transition-all cursor-pointer inline-block"
+            className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-cyan-400 text-cyan-400 rounded-full text-sm sm:text-base font-semibold hover:bg-cyan-400 hover:bg-opacity-10 transition-all cursor-pointer inline-block"
           >
             Contact Me
           </motion.a>
@@ -151,7 +151,7 @@ const Hero = () => {
 
         {/* Scroll Indicator */}
         <motion.div
-          className="flex justify-center"
+          className="flex justify-center hidden sm:flex"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
